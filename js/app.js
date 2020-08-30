@@ -12,6 +12,7 @@ const urlCovid_hoy            = `https://disease.sh/v3/covid-19/countries/ARG?ye
 const divTableroPais          = document.querySelector('#tableroPais');
 const divTableroProvinciaHoy  = document.querySelector('#provincia_hoy');
 const divTableroProvinciaAyer = document.querySelector('#provincia_ayer');
+const imgProvincia            = document.querySelector('#img_prov');
 
 // Tablero -> Pais
 fetch( urlCovid_hoy )
@@ -146,4 +147,10 @@ Papa.parse('/data.csv', {
 	complete: function() {}
 });
 
+fetch('/minsaer_db.json')
+        .then(resp => resp.json())
+        .then(resp => {
 
+                imgProvincia.src = resp[0]["20200828"]["img"];
+
+        });
