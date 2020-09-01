@@ -1,9 +1,20 @@
+var url = window.location.href;
+var swLocation = '/covid-monitor/sw.js';
+var urlCovid_ER = `https://gist.githubusercontent.com/Cuchu/95bc6f743842f1315f716627f2610d4c/raw/covid-19-arg.csv`;
+
 
 // Verificar si podemos usar Service Workers
 if (navigator.serviceWorker) {
 
+        if ( url.includes('localhost') )
+        {
+                swLocation  = '/sw.js';
+                urlCovid_ER = `/data.csv`;
+                console.log('Trabajando en el localhost!');
+        }
+
         // registramos el SW
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register( swLocation )
             .then ( registro => {
                     console.log('SW Ok!');
             });
@@ -27,8 +38,6 @@ let _fecha = ( param_dias = 1 ) => {
 
 
 const urlCovid_hoy            = `https://disease.sh/v3/covid-19/countries/ARG?yesterday=true&twoDaysAgo=true&strict=true&allowNull=true`;
-const urlCovid_ER             = `/data.csv`;
-const urlCovid_ER             = `https://gist.githubusercontent.com/Cuchu/95bc6f743842f1315f716627f2610d4c/raw/covid-19-arg.csv`;
 const divTableroPais          = document.querySelector('#tableroPais');
 const divTableroProvinciaHoy  = document.querySelector('#provincia_hoy');
 const divTableroProvinciaAyer = document.querySelector('#provincia_ayer');

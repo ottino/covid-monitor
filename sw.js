@@ -17,6 +17,7 @@ self.addEventListener('install', e => {
 
             // Cargar en cache
             return cache.addAll([
+                // '/',
                 '/index.html',
                 '/css/style.css',
                 '/js/app.js',
