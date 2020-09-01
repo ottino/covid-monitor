@@ -1,9 +1,25 @@
 [
     {
-        "actualizacion": "2020/08/29",
-        "20200828": {
+        "actualizacion": "2020/08/31",
+        "28/08/2020": {
+            "page": "http://www.entrerios.gov.ar/msalud/?p=38101",
+            "img": "http://www.entrerios.gov.ar/msalud/wp-content/uploads/2020/08/whatsapp-image-2020-08-28-at-10.59.04-am.jpeg"
+        },
+        "29/08/2020": {
             "page": "http://www.entrerios.gov.ar/msalud/?p=38104",
             "img": "http://www.entrerios.gov.ar/msalud/wp-content/uploads/2020/08/whatsapp-image-2020-08-29-at-9.40.32-am.jpeg"
+        },
+        "30/08/2020": {
+            "page": "http://www.entrerios.gov.ar/msalud/?p=38111",
+            "img": "http://www.entrerios.gov.ar/msalud/wp-content/uploads/2020/08/whatsapp-image-2020-08-30-at-11.56.49-am.jpeg"
+        },
+        "31/08/2020": {
+            "page": "http://www.entrerios.gov.ar/msalud/?p=38119",
+            "img": "http://www.entrerios.gov.ar/msalud/wp-content/uploads/2020/08/whatsapp-image-2020-08-31-at-11.53.42-am-566x800.jpeg"
+        },
+        "1/09/2020": {
+            "page": "http://www.entrerios.gov.ar/msalud/?p=38127",
+            "img": "http://www.entrerios.gov.ar/msalud/wp-content/uploads/2020/09/whatsapp-image-2020-09-01-at-9.45.16-am-1-566x800.jpeg"
         }
     }
 ]

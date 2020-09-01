@@ -1,3 +1,4 @@
+
 // Verificar si podemos usar Service Workers
 if (navigator.serviceWorker) {
 
@@ -8,7 +9,26 @@ if (navigator.serviceWorker) {
             });
 };
 
+let _fecha = ( param_dias = 1 ) => {
+
+        let fecha = new Date();
+        fecha.setDate(fecha.getDate() - param_dias);
+
+        let mes = fecha.getMonth()+1 < 10
+                  ?  "0".concat(fecha.getMonth()+1)
+                  : fecha.getMonth()+1 , 
+
+            dia = fecha.getDate(), 
+            ano = fecha.getFullYear(); 
+
+        return dia + "/" + mes + "/" + ano;
+
+    };
+
+
 const urlCovid_hoy            = `https://disease.sh/v3/covid-19/countries/ARG?yesterday=true&twoDaysAgo=true&strict=true&allowNull=true`;
+const urlCovid_ER             = `/data.csv`;
+const urlCovid_ER             = `https://gist.githubusercontent.com/Cuchu/95bc6f743842f1315f716627f2610d4c/raw/covid-19-arg.csv`;
 const divTableroPais          = document.querySelector('#tableroPais');
 const divTableroProvinciaHoy  = document.querySelector('#provincia_hoy');
 const divTableroProvinciaAyer = document.querySelector('#provincia_ayer');
@@ -19,19 +39,19 @@ fetch( urlCovid_hoy )
         .then( resp => resp.json() )
         .then( resp => {
 
-                const { todayCases , 
-                        todayDeaths , 
-                        active , 
-                        cases , 
-                        deaths , 
-                        recovered , 
-                        tests , 
+                const { todayCases ,
+                        todayDeaths ,
+                        active ,
+                        cases ,
+                        deaths ,
+                        recovered ,
+                        tests ,
                         updated ,
                         casesPerOneMillion ,
                         deathsPerOneMillion ,
                         testsPerOneMillion } = resp;
 
-                divTableroPais.innerHTML = 
+                divTableroPais.innerHTML =
                 `
                 <div class="card">
                  <div class="card-body carta_ultrep">
@@ -69,24 +89,13 @@ fetch( urlCovid_hoy )
 
         });
 
-let fecha = new Date();
+fecha_completa          = _fecha(1);
+fecha_completa_ayer     = _fecha(2);
 
-// ayer
-fecha.setDate(fecha.getDate() - 1);
-
-let mes = fecha.getMonth()+1 < 10
-          ?  "0".concat(fecha.getMonth()+1)
-          : fecha.getMonth()+1 ; //obteniendo mes
-
-let dia = fecha.getDate(); //obteniendo dia
-let ano = fecha.getFullYear(); //obteniendo a
-
-fecha_completa = dia + "/" + mes + "/" + ano;
-fecha_completa_ayer = "27" + "/" + mes + "/" + ano;
 let totalER = 0;
 
 console.log({ fecha_completa });
-Papa.parse('/data.csv', {
+Papa.parse( urlCovid_ER , {
 	download: true,
 	step: function(row) {
 
@@ -94,6 +103,16 @@ Papa.parse('/data.csv', {
                            ? Number(row.data[7])
                            : 0;
 
+                divTableroProvinciaHoy.innerHTML =
+                `
+                <div class="card-body carta_ultrep">
+                <h5 class="card-title"> ${ fecha_completa }</h5>
+                <p class="card-text">
+                        Todavia no se procesaron los datos
+                </p>
+                </div>
+                `;      
+   
                 if ( row.data[4] == "Entre Ríos" && row.data[0] == fecha_completa )
                 {
                        [fecha,dia_inicio,dia_cuarentena_dnu260,
@@ -109,7 +128,7 @@ Papa.parse('/data.csv', {
                         divTableroProvinciaHoy.innerHTML =
                         `
                          <div class="card-body carta_ultrep">
-                          <h5 class="card-title"> ${ fecha }</h5>
+                          <h5 class="card-title"> ${ fecha_completa }</h5>
                           <p class="card-text">
                                 Contagiados: ${ nue_casosconf_diff } <br>
                                 Fallecidos: ${ nue_fallecidos_diff } <br>
@@ -141,8 +160,6 @@ Papa.parse('/data.csv', {
                         `;
                 }
 
-
-
 	},
 	complete: function() {}
 });
@@ -150,7 +167,10 @@ Papa.parse('/data.csv', {
 fetch('/minsaer_db.json')
         .then(resp => resp.json())
         .then(resp => {
+                imgProvincia.src = resp[0][_fecha(20)]["img"];
 
-                imgProvincia.src = resp[0]["20200828"]["img"];
+        }).catch(()=> {
+
+                // imgProvincia.src = "";
 
         });
