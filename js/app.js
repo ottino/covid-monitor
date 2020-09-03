@@ -1,15 +1,16 @@
-var url = window.location.href;
-var swLocation = '/covid-monitor/sw.js';
-var urlCovid_ER = `https://gist.githubusercontent.com/Cuchu/95bc6f743842f1315f716627f2610d4c/raw/covid-19-arg.csv`;
-
-
+var url            = window.location.href;
+var swLocation     = '/covid-monitor/sw.js';
+//var urlCovid_ER = `https://gist.githubusercontent.com/Cuchu/95bc6f743842f1315f716627f2610d4c/raw/covid-19-arg.csv`;
+var urlCovid_ER    = `https://gist.githubusercontent.com/ottino/d67d6fd9f823192c50173e824f774b54/raw/261299046f96475a00e9d032ca97cab3266e40f4/basecovidarg.csv`;
+var urlCovidMinSa  = `/covid-monitor/minsaer_db.json`;
 // Verificar si podemos usar Service Workers
 if (navigator.serviceWorker) {
 
-        if ( url.includes('localhost') )
+        if ( url.includes('127.0') )
         {
                 swLocation  = '/sw.js';
                 urlCovid_ER = `/data.csv`;
+                urlCovidMinSa = `/minsaer_db.json`;
                 console.log('Trabajando en el localhost!');
         }
 
@@ -120,8 +121,8 @@ Papa.parse( urlCovid_ER , {
                         Todavia no se procesaron los datos
                 </p>
                 </div>
-                `;      
-   
+                `;
+
                 if ( row.data[4] == "Entre Ríos" && row.data[0] == fecha_completa )
                 {
                        [fecha,dia_inicio,dia_cuarentena_dnu260,
@@ -173,10 +174,10 @@ Papa.parse( urlCovid_ER , {
 	complete: function() {}
 });
 
-fetch('/minsaer_db.json')
+fetch( urlCovidMinSa )
         .then(resp => resp.json())
         .then(resp => {
-                imgProvincia.src = resp[0][_fecha(20)]["img"];
+                imgProvincia.src = resp[0][_fecha(0)]["img"];
 
         }).catch(()=> {
 
