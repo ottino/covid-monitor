@@ -1,6 +1,6 @@
 var url            = window.location.href;
 var swLocation     = '/covid-monitor/sw.js';
-var urlCovid_ER    = `http://gist.githubusercontent.com/ottino/d67d6fd9f823192c50173e824f774b54/raw/basecovidarg.csv`;
+var urlCovid_ER    = `https://gist.githubusercontent.com/ottino/d67d6fd9f823192c50173e824f774b54/raw/basecovidarg.csv`;
 var urlCovidMinSa  = `/covid-monitor/minsaer_db.json`;
 
 // Verificar si podemos usar Service Workers
