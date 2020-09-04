@@ -10,6 +10,7 @@ if (navigator.serviceWorker) {
         {
                 swLocation  = '/sw.js';
                 urlCovid_ER = `/data.csv`;
+                urlCovid_ER    = `https://gist.githubusercontent.com/ottino/d67d6fd9f823192c50173e824f774b54/raw/basecovidarg.csv`;
                 urlCovidMinSa = `/minsaer_db.json`;
                 console.log('Trabajando en el localhost!');
         }
@@ -105,7 +106,7 @@ fecha_completa_ayer     = _fecha(2);
 let totalER = 0;
 
 console.log({ fecha_completa });
-Papa.parse( urlCovid_ER , {
+Papa.parse( 'https://gist.githubusercontent.com/ottino/d67d6fd9f823192c50173e824f774b54/raw/basecovidarg.csv' , {
 	download: true,
 	step: function(row) {
 
@@ -174,13 +175,10 @@ Papa.parse( urlCovid_ER , {
 	complete: function() {}
 });
 
-fetch( urlCovidMinSa )
-        .then(resp => resp.json())
-        .then(resp => {
-                imgProvincia.src = resp[0][_fecha(0)]["img"];
 
-        }).catch(()=> {
+// fetch( urlCovidMinSa )
+//         .then(resp => resp.json())
+//         .then(resp => {
+//                 imgProvincia.src = resp[0][_fecha(0)]["img"];
 
-                // imgProvincia.src = "";
-
-        });
+//         }).catch(()=> {});
